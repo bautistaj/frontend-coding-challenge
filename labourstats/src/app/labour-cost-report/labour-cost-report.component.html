@@ -1,0 +1,104 @@
+<h1>
+  Labour cost report
+</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th (click)="order()">
+        Payroll provider <span>^</span>
+      </th>
+      <th>
+        Worker
+      </th>
+      <th>
+        Compliance Score
+      </th>
+      <th>
+        Gross pay(£)
+      </th>
+      <th>
+        Payroll admin(£)
+      </th>
+      <th>
+        Labour coast(£)
+      </th>
+      <th>
+        Work force
+      </th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let item of data">
+    <tr *ngFor="let directContractor of item.directContractors">
+      <td>
+        {{ directContractor.name }}
+      </td>
+      <td>
+        {{ directContractor.workerCount }}
+      </td>
+      <td>
+        {{ directContractor.complianceStats !== null ? directContractor.complianceStats.Total : 0 }} %
+      </td>
+      <td>
+        {{ directContractor.grossPayTotal | number:'1.0-0'}}
+      </td>
+      <td>
+        {{ directContractor.payrollAdminTotal === 0 ? '-' : directContractor.payrollAdminTotal}}
+      </td>
+      <td>
+        {{ directContractor.labourCostTotal | number:'1.0-0' }}
+      </td>
+      <td>
+        {{ directContractor.workForce | number: '1.1-1'}}
+      </td>
+    </tr>
+
+    <tr *ngFor="let provider of providers">
+      <td>
+        {{ provider.name }}
+      </td>
+      <td>
+        {{ provider.workerCount }}
+      </td>
+      <td>
+        {{ (provider.complianceStats ? provider.complianceStats?.Total : 0) | number:'1.0-0' }} %
+      </td>
+      <td>
+        {{ provider.grossPayTotal | number:'1.0-0' }}
+      </td>
+      <td>
+        {{ provider.payrollAdminTotal === 0 ? '-' : provider.payrollAdminTotal}}
+      </td>
+      <td>
+        {{ provider.labourCostTotal | number:'1.0-0' }}
+      </td>
+      <td>
+        {{ provider.workForce | number: '1.1-1'}}
+      </td>
+    </tr>
+
+    <tr *ngFor="let total of item.total">
+      <td>
+        {{ total.name }}
+      </td>
+      <td>
+        {{ total.workerCount }}
+      </td>
+      <td>
+        {{ (total.complianceStats ? total.complianceStats?.Total : 0) | number:'1.0-0' }} %
+      </td>
+      <td>
+        {{ total.grossPayTotal | number:'1.0-0' }}
+      </td>
+      <td>
+        {{ total.payrollAdminTotal === 0 ? '-' : total.payrollAdminTotal}}
+      </td>
+      <td>
+        {{ total.labourCostTotal | number:'1.0-0' }}
+      </td>
+      <td>
+        {{ total.workForce }}
+      </td>
+    </tr>
+  </tbody>
+</table>

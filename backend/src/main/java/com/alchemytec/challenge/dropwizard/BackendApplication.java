@@ -14,7 +14,8 @@ import java.util.EnumSet;
 public class BackendApplication extends Application<BackendConfiguration> {
     
     public static void main(String[] args) throws Exception {
-        new BackendApplication().run(args);
+    	String[] errorSoon = {"server", "./src/main/configuration/backend.yml"};
+        new BackendApplication().run(errorSoon);
     }
 
     @Override
