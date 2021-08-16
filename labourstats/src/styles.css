@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;700;900&display=swap');
+
+h1 {
+ color: #777a7d;
+}
+
+table {
+  width: 100%;
+  font-family: 'Lato', sans-serif;
+}
+
+thead{
+  color: #c2c5c7;
+  text-decoration: uppercase;
+}
+
+td, th {
+  text-align: left;
+  padding: 8px;
+}
+
+td.number {
+  text-align: left;
+  padding: 8px;
+  font-size: 24px;
+  color: #000000;
+}
+
+td.bold {
+  text-align: left;
+  padding: 8px;
+  font-weight: 600;
+  color: #b2b7ba;
+}
+
+td.totals {
+  margin-top: 20px;
+}
+
+.arrow {
+  color: rgb(241, 70, 70);
+}

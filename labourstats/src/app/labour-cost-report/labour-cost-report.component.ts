@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Column } from '../interfaces/Column';
 import { LabourCostService } from '../services/labour-cost.service';
 
 @Component({
@@ -7,13 +8,23 @@ import { LabourCostService } from '../services/labour-cost.service';
   styleUrls: ['./labour-cost-report.component.css']
 })
 export class LabourCostReportComponent implements OnInit {
-  private orderLstAsc = false;
+  public orderLstAsc = false;
   public totalWorker = 0;
   public directContractors: any = [];
   public providers: any = [];
   public total: any = [];
   public data: any = [];
 
+  public columns: { [key: string]: any } = {
+    complianceStats: false,
+    grossPayTotal: false,
+    labourCostTotal: false,
+    name: false,
+    payrollAdminTotal: false,
+    workForce: false,
+    workerCount: false
+  };
+  
   constructor(private labourCostService: LabourCostService) { }
 
   ngOnInit(): void {
@@ -24,6 +35,7 @@ export class LabourCostReportComponent implements OnInit {
     this.labourCostService.getLabourCostReport()
     .subscribe((data) => {
       this.data = data;
+      console.log(this.data);
       
       /**
        * Get the totals of workers
@@ -37,7 +49,7 @@ export class LabourCostReportComponent implements OnInit {
       /**
        * Set default order
        */
-      this.providers = this.orderDesc(this.providers);
+      this.providers = this.orderDesc(this.providers, 'name');
     });
   }
 
@@ -59,6 +71,9 @@ export class LabourCostReportComponent implements OnInit {
   private calculateValues(object: any){
     object.grossPayTotal = object.grossPayTotal / 100;
     object.workForce = this.getPercent(this.totalWorker, object.workerCount);
+    console.log(object.complianceStats === null ? 0 : object.complianceStats.Total);
+    
+    object.complianceStats = object.complianceStats === null ? 0 : object.complianceStats.Total;
     return  object;
   }
 
@@ -66,12 +81,13 @@ export class LabourCostReportComponent implements OnInit {
    * Order list tDesc
    * @param lst 
    */
-  public orderDesc(lst: any[]){
+  public orderDesc(lst: any[], columnName: string){
+
     return lst.sort(function (a:any , b:any) {
-      if (a.name < b.name) {
+      if (a[columnName] <= b[columnName]) {
         return 1;
       }
-      if (a.name > b.name) {
+      if (a[columnName] >= b[columnName]) {
         return -1;
       }
       // a must be equal to b
@@ -83,12 +99,13 @@ export class LabourCostReportComponent implements OnInit {
    * Order list Asc
    * @param lst 
    */
-     public orderAsc(lst: any[]){
+     public orderAsc(lst: any[], columnName: string){
+      this.activeColumn(columnName);
       return lst.sort(function (a:any , b:any) {
-        if (a.name > b.name) {
+        if (a[columnName] >= b[columnName]) {
           return 1;
         }
-        if (a.name < b.name) {
+        if (a[columnName] <= b[columnName]) {
           return -1;
         }
         // a must be equal to b
@@ -99,14 +116,30 @@ export class LabourCostReportComponent implements OnInit {
   /**
    * Order lst asc or desc
    */
-  public order(){
+  public order(columnName: string){
+    this.activeColumn(columnName);
+    this.activeColumn(columnName);
     if(this.orderLstAsc){
       this.orderLstAsc = false;
-      this.orderAsc(this.providers);
+      this.orderAsc(this.providers, columnName);
     }else{
       this.orderLstAsc = true;
-      this.orderDesc(this.providers);
+      this.orderDesc(this.providers, columnName);
     }
-    
+  }
+
+  /**
+   * Active column according ordedered
+   * @param columnName 
+   */
+  public activeColumn(columnName: string){
+    /**
+     * Reset values
+     */
+    for (const key in this.columns) {
+      this.columns[key] = false;
+    }
+
+    this.columns[columnName] = true;
   }
 }

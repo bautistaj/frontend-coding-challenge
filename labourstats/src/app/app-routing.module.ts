@@ -4,7 +4,7 @@ import { LabourCostReportComponent } from './labour-cost-report/labour-cost-repo
 
 const routes: Routes = [
   {
-    path: 'labourCostReport',
+    path: '',
     component: LabourCostReportComponent
   }
 ];

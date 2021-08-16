@@ -5,26 +5,26 @@
 <table>
   <thead>
     <tr>
-      <th (click)="order()">
-        Payroll provider <span>^</span>
+      <th (click)="order('name')">
+        Payroll provider <span class="arrow" *ngIf="columns.name" >{{ orderLstAsc ? '&#9650;':'&#9660;' }}</span>
       </th>
-      <th>
-        Worker
+      <th (click)="order('workerCount')">
+        Worker <span class="arrow" *ngIf="columns.workerCount" >{{ orderLstAsc ? '&#9650;':'&#9660;' }}</span>
       </th>
-      <th>
-        Compliance Score
+      <th (click)="order('complianceStats')">
+        Compliance Score <span class="arrow" *ngIf="columns.complianceStats" >{{ orderLstAsc ? '&#9650;':'&#9660;' }}</span>
       </th>
-      <th>
-        Gross pay(£)
+      <th (click)="order('grossPayTotal')">
+        Gross pay(£) <span class="arrow" *ngIf="columns.grossPayTotal">{{ orderLstAsc ? '&#9650;':'&#9660;' }}</span>
       </th>
       <th>
         Payroll admin(£)
       </th>
-      <th>
-        Labour coast(£)
+      <th (click)="order('labourCostTotal')">
+        Labour coast(£) <span class="arrow" *ngIf="columns.labourCostTotal">{{ orderLstAsc ? '&#9650;':'&#9660;' }}</span>
       </th>
-      <th>
-        Work force
+      <th (click)="order('workForce')">
+        Work force <span class="arrow"  *ngIf="columns.workForce">{{ orderLstAsc ? '&#9650;':'&#9660;' }}</span>
       </th>
     </tr>
   </thead>
@@ -33,70 +33,70 @@
       <td>
         {{ directContractor.name }}
       </td>
-      <td>
+      <td class="number">
         {{ directContractor.workerCount }}
       </td>
-      <td>
-        {{ directContractor.complianceStats !== null ? directContractor.complianceStats.Total : 0 }} %
+      <td class="bold">
+        {{ directContractor.complianceStats }} %
       </td>
-      <td>
+      <td class="number">
         {{ directContractor.grossPayTotal | number:'1.0-0'}}
       </td>
-      <td>
+      <td class="number">
         {{ directContractor.payrollAdminTotal === 0 ? '-' : directContractor.payrollAdminTotal}}
-      </td>
-      <td>
+      </td >
+      <td class="number">
         {{ directContractor.labourCostTotal | number:'1.0-0' }}
       </td>
-      <td>
+      <td class="number">
         {{ directContractor.workForce | number: '1.1-1'}}
       </td>
     </tr>
 
     <tr *ngFor="let provider of providers">
-      <td>
+      <td [class]="columns.name ? 'bold': '' ">
         {{ provider.name }}
       </td>
-      <td>
+      <td class="number" [class]="columns.workerCount ? 'bold': '' ">
         {{ provider.workerCount }}
       </td>
-      <td>
-        {{ (provider.complianceStats ? provider.complianceStats?.Total : 0) | number:'1.0-0' }} %
+      <td [class]="columns.complianceStats ? 'bold': '' ">
+        {{ provider.complianceStats | number:'1.0-0' }} %
       </td>
-      <td>
+      <td class="number" [class]="columns.grossPayTotal ? 'bold': '' ">
         {{ provider.grossPayTotal | number:'1.0-0' }}
       </td>
       <td>
         {{ provider.payrollAdminTotal === 0 ? '-' : provider.payrollAdminTotal}}
       </td>
-      <td>
+      <td class="number" [class]="columns.labourCostTotal ? 'bold': '' ">
         {{ provider.labourCostTotal | number:'1.0-0' }}
       </td>
-      <td>
+      <td class="number" [class]="columns.workForce ? 'bold': '' ">
         {{ provider.workForce | number: '1.1-1'}}
       </td>
     </tr>
 
-    <tr *ngFor="let total of item.total">
-      <td>
+    <tr class = "totals" *ngFor="let total of item.total">
+      <td class="bold">
         {{ total.name }}
       </td>
-      <td>
+      <td class="number bold">
         {{ total.workerCount }}
       </td>
       <td>
-        {{ (total.complianceStats ? total.complianceStats?.Total : 0) | number:'1.0-0' }} %
+        {{ total.complianceStats | number:'1.0-0' }} %
       </td>
-      <td>
+      <td class="number bold">
         {{ total.grossPayTotal | number:'1.0-0' }}
       </td>
       <td>
         {{ total.payrollAdminTotal === 0 ? '-' : total.payrollAdminTotal}}
       </td>
-      <td>
+      <td class="number bold">
         {{ total.labourCostTotal | number:'1.0-0' }}
       </td>
-      <td>
+      <td class="number bold">
         {{ total.workForce }}
       </td>
     </tr>
