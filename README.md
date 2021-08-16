@@ -70,7 +70,7 @@ Package Manager: npm 6.14.12
 Docker: 20.10.8
 
 ## Getting start backend
-* Go to directory backend project backend
+* Go to directory backend project
 * Generate the image
 ```
 docker build -t frontend-coding-challenge .
