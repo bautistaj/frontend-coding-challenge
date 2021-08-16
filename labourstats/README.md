@@ -3,10 +3,10 @@
 Challenge solved
 
 ## Prerequisites
-Angular CLI: 12.2.1
-Node: 12.22.1
-Package Manager: npm 6.14.12
-Docker: 20.10.8
+* Angular CLI: 12.2.1
+* Node: 12.22.1
+* Package Manager: npm 6.14.12
+* Docker: 20.10.8
 
 ## Getting start backend
 * Go to directory backend project backend
